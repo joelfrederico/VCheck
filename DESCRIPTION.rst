@@ -8,3 +8,7 @@ incompatibilities with the newer modules that result in the scripts
 breaking. It is then very difficult to track down which version of the
 module the script depends on if it was never recorded which version of
 the module the script is built against.
+
+Initially, this requires modules to be installed via PIP in
+development mode in a git repository. The end-goal is to have version
+checking be flexible enough to detect git and work with or without it.
