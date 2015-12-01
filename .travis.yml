@@ -2,7 +2,7 @@ language: python
 python:
 - '2.7'
 - '3.5'
-script: nosetests
+script: tox
 deploy:
   provider: pypi
   user: JoelFrederico
