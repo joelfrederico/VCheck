@@ -3,9 +3,9 @@ language: python
 matrix:
   include:
     - python: 3.5
-      env: TOXENV=py35
+      env: TOXENV=py35 TRAV_DIST="sdist bdist_wheel"
     - python: 2.7
-      env: TOXENV=py27
+      env: TOXENV=py27 TRAV_DIST="bdist_wheel"
 
 install: pip install tox
 
@@ -16,17 +16,11 @@ deploy:
   user: JoelFrederico
   password:
     secure: P5WR5NcuUBTv7ln+khLSaU/olyILOzGbrTNaV33AxkSVyfB1Q4izARZL/aLA32tARgM2cNzy6OTUpmnj/tdQ7kEL4tgwcWtV21fY58PWLwzRw7/gkzF7WOd12qW8UCrkebGVvfewZm8bn6vfGYBHu6hqR9a8SW5lcKtCVeihqOi0Hf7h4LDnxLjRHZB+HEDiHdKxYTRJFw5AFNMVgCpl35wbScUtrob1eMf3uW90lknLyMYm17DXKtQn+vMRXsozm79ImC7QzW3U4V0qZnTaAoNIBLBpBqkJG9wyqZvQMM9+qhmQpb11poW3PEi9yQOJIoINdsZfHfcet/ZwPRtpvpNL/S9Y8E70F1bzB6kpzhuSpS+O5pUcEWN7mh7ZB2B/DR6Otb4yMOUpyXhKnh1tZUzNZHXU4O4pmZlpaWnP6W+jIbuKc1mGdsdbaJ6ryUbPAK+a3GTdxK6XU06vIHluo4BRH7Er9U5BOshDvd6jL4c/ztbFib8gwMxSV/T4qe/USPKrfjlhKoOIwN3vwljsUB7FYFaD7J2jbB0AU6SqqnpgB/DacAoj8lFhcR6FzqJEIC3VaTrVCfpBNBE1EIn5F56nemhQ3pYJWL0SRkxi0LTaUvCVXLYBgR+S2UhIjizl1DpOaYUZt5iM5iNWO0+1DZOsDnYO+9bhMgZhAnL+4UA=
-  distributions: "sdist bdist_wheel"
-  on:
-    tags: true
-    python: 3.5
-
-deploy:
-  provider: pypi
-  user: JoelFrederico
-  password:
-    secure: P5WR5NcuUBTv7ln+khLSaU/olyILOzGbrTNaV33AxkSVyfB1Q4izARZL/aLA32tARgM2cNzy6OTUpmnj/tdQ7kEL4tgwcWtV21fY58PWLwzRw7/gkzF7WOd12qW8UCrkebGVvfewZm8bn6vfGYBHu6hqR9a8SW5lcKtCVeihqOi0Hf7h4LDnxLjRHZB+HEDiHdKxYTRJFw5AFNMVgCpl35wbScUtrob1eMf3uW90lknLyMYm17DXKtQn+vMRXsozm79ImC7QzW3U4V0qZnTaAoNIBLBpBqkJG9wyqZvQMM9+qhmQpb11poW3PEi9yQOJIoINdsZfHfcet/ZwPRtpvpNL/S9Y8E70F1bzB6kpzhuSpS+O5pUcEWN7mh7ZB2B/DR6Otb4yMOUpyXhKnh1tZUzNZHXU4O4pmZlpaWnP6W+jIbuKc1mGdsdbaJ6ryUbPAK+a3GTdxK6XU06vIHluo4BRH7Er9U5BOshDvd6jL4c/ztbFib8gwMxSV/T4qe/USPKrfjlhKoOIwN3vwljsUB7FYFaD7J2jbB0AU6SqqnpgB/DacAoj8lFhcR6FzqJEIC3VaTrVCfpBNBE1EIn5F56nemhQ3pYJWL0SRkxi0LTaUvCVXLYBgR+S2UhIjizl1DpOaYUZt5iM5iNWO0+1DZOsDnYO+9bhMgZhAnL+4UA=
-  distributions: "bdist_wheel"
+  distributions: $TRAV_DIST
   on:
     tags: true
     python: 2.7
+
+notifications:
+  slack:
+    secure: uK9CfHjfJ5KxJH60pz9jHnDtuqINbYPV2h3Pdetwdgm0WMYwbVU08sGLrymjz4Gc4QPQiakiKhpwyUH2y5dkw86sefqGiLCfAyue6GviqZNiP4tIwApEgIO+SqjFbzFRLdeat99LH3QS/Ov+TenIr39Tn5NMg6poR3MEjWwIa708qAOZRC3uvrbhTJEo/ISm0ntb87XTrI9p0HQe3clSBcpRaa3ElDbWemet6dS5PVFmXkdrBPWZboqt4TNN7USfqpocXtnON5e0GZu1Ktil+j7mpOzZa2r79kbotrPp+bF+FNCf4SFIWlaRmA1o1g6CTwCkVFK0MYM8r5J0+RlHIR+4wFKvfIbpnLGO6T7RfPJb/Guepw6srAiRHZA1TKHmwGqy4RSlVxtiZ7B0owMzGQuMjhksI4aRESBW7gvJKtoVzOK7VJOGRpKfmWXuUiLBtPnSSzjmF/Y+nP6IMhwKThCPqxXBUtRzCYUv+ugD42mecuToQWVCeKrvRNVf0f62i11MvZ9hF/PHZP+mwSgXXiZ96Nf4nc6Uwko/gQFFewuGAH50u44X8Tf8W3uV8hvZaqx+R/ZJhJr52BXSJ7HDANVeg3HvqHOt93niR4iQP3pSkE2KbnjIDFzMLqHply/kFgPb2Hi8m6XyOUt1rq3zA5dwm4yfyr+TQ7J39TJfrnQ=
