@@ -22,9 +22,9 @@ deploy:
   - provider: releases
     api_key:
       secure: j2XuqIdsYh0kWxoqIpvR0LIWOX24KLRI1plCQWmb1yywULPyz3KWCemqyC80dSbDJKUWEwk2yYa9iKxIqxibEunhMXewZuwd3Es0hyHjqfbH7DnSu1TFetdH1XUvaFJW7cHG+AHPBgPz+TplTHsK019MePUNF0QiwTLWsD9fAS9/qHVy4CGdzALx7E1O2iUK5IsrTYiTqP0Jtat6ivvm+WvIXK0l+RD+SGkr2F/kRKwZJHvtYcmopd5jr0HRyu9sqk1+Ge+ou5zPEFnt3ypv/lkNZjdP6lzCMxq3ccvWQ7rewtBi4D2T7MSrVijd3kDZRWyLWcbGFS1dPvUNBWpSvOGsMRn2CtdIsLTAFHCJ3eEzkdps+3GfeZzYCJ+pNQ9xrJ0UahRKug/eGAvW4neaye9fSWmYwbiqbJSNbaxBEPaw9FWx2WIM1UjpwtOyEm9IkYtcm5j9eccTuobbTNjmjEMhtHhDZ29Ywc2mHqjmRuKLMo5GOaO8+O66q1KkiHycGRUwkdmO3us/RRL51Pk55YJj96EbUYHYTHgcfBkcDE8MqjIVo0I+3lfYXbBFE1qdGcwhHrughrXJkPHocH1uDC5oGJviHjrI0F8SQLBv+JtHKwnSmldJM//xDZ/E+daJDW+GzF9uXmUS24jw7g3a7xKo9msbWoaEOjZzogB5lro=
-    file: ''
     on:
       repo: joelfrederico/VCheck
+      python: 3.5
 
 notifications:
   slack:
