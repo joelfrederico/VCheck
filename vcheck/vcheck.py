@@ -1,8 +1,12 @@
 from .checkmod import CheckMod
+import git as _git
 
 
 def vcheck(mod, hexsha=None, version=None):
-    cmod = CheckMod(mod)
+    try:
+        cmod = CheckMod(mod)
+    except _git.InvalidGitRepositoryError:
+        raise NotImplemented('Only works for Git repositories.')
 
     if hexsha is not None and version is not None:
         raise ValueError('Only specify either hexsha ({}) or version({})'.format(hexsha, version))

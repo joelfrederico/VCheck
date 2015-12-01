@@ -10,7 +10,7 @@ class CheckMod(object):
         self._version = None
 
         # Get main module
-        res = _re.search('.*(?=\.)', self.mod.__name__)
+        res = _re.search('.*(?=\.)', '{}.'.format(self.mod.__name__))
         self._mainmod = _importlib.import_module(res.group())
 
         # Get main module path
