@@ -19,7 +19,6 @@ deploy:
   distributions: $TRAV_DIST
   on:
     tags: true
-    python: 2.7
 
 notifications:
   slack:
