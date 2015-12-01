@@ -1,17 +1,31 @@
 language: python
+
 matrix:
   include:
     - python: 3.5
       env: TOXENV=py35
     - python: 2.7
       env: TOXENV=py27
+
 install: pip install tox
+
 script: tox
+
 deploy:
   provider: pypi
   user: JoelFrederico
   password:
     secure: P5WR5NcuUBTv7ln+khLSaU/olyILOzGbrTNaV33AxkSVyfB1Q4izARZL/aLA32tARgM2cNzy6OTUpmnj/tdQ7kEL4tgwcWtV21fY58PWLwzRw7/gkzF7WOd12qW8UCrkebGVvfewZm8bn6vfGYBHu6hqR9a8SW5lcKtCVeihqOi0Hf7h4LDnxLjRHZB+HEDiHdKxYTRJFw5AFNMVgCpl35wbScUtrob1eMf3uW90lknLyMYm17DXKtQn+vMRXsozm79ImC7QzW3U4V0qZnTaAoNIBLBpBqkJG9wyqZvQMM9+qhmQpb11poW3PEi9yQOJIoINdsZfHfcet/ZwPRtpvpNL/S9Y8E70F1bzB6kpzhuSpS+O5pUcEWN7mh7ZB2B/DR6Otb4yMOUpyXhKnh1tZUzNZHXU4O4pmZlpaWnP6W+jIbuKc1mGdsdbaJ6ryUbPAK+a3GTdxK6XU06vIHluo4BRH7Er9U5BOshDvd6jL4c/ztbFib8gwMxSV/T4qe/USPKrfjlhKoOIwN3vwljsUB7FYFaD7J2jbB0AU6SqqnpgB/DacAoj8lFhcR6FzqJEIC3VaTrVCfpBNBE1EIn5F56nemhQ3pYJWL0SRkxi0LTaUvCVXLYBgR+S2UhIjizl1DpOaYUZt5iM5iNWO0+1DZOsDnYO+9bhMgZhAnL+4UA=
-  distributions: "sdist bdist_wheel"
+  distributions: "sdist"
+  on:
+    tags: true
+    python: 3.5
+
+deploy:
+  provider: pypi
+  user: JoelFrederico
+  password:
+    secure: P5WR5NcuUBTv7ln+khLSaU/olyILOzGbrTNaV33AxkSVyfB1Q4izARZL/aLA32tARgM2cNzy6OTUpmnj/tdQ7kEL4tgwcWtV21fY58PWLwzRw7/gkzF7WOd12qW8UCrkebGVvfewZm8bn6vfGYBHu6hqR9a8SW5lcKtCVeihqOi0Hf7h4LDnxLjRHZB+HEDiHdKxYTRJFw5AFNMVgCpl35wbScUtrob1eMf3uW90lknLyMYm17DXKtQn+vMRXsozm79ImC7QzW3U4V0qZnTaAoNIBLBpBqkJG9wyqZvQMM9+qhmQpb11poW3PEi9yQOJIoINdsZfHfcet/ZwPRtpvpNL/S9Y8E70F1bzB6kpzhuSpS+O5pUcEWN7mh7ZB2B/DR6Otb4yMOUpyXhKnh1tZUzNZHXU4O4pmZlpaWnP6W+jIbuKc1mGdsdbaJ6ryUbPAK+a3GTdxK6XU06vIHluo4BRH7Er9U5BOshDvd6jL4c/ztbFib8gwMxSV/T4qe/USPKrfjlhKoOIwN3vwljsUB7FYFaD7J2jbB0AU6SqqnpgB/DacAoj8lFhcR6FzqJEIC3VaTrVCfpBNBE1EIn5F56nemhQ3pYJWL0SRkxi0LTaUvCVXLYBgR+S2UhIjizl1DpOaYUZt5iM5iNWO0+1DZOsDnYO+9bhMgZhAnL+4UA=
+  distributions: "bdist_wheel"
   on:
     tags: true
