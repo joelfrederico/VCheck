@@ -25,6 +25,7 @@ deploy:
     on:
       repo: joelfrederico/VCheck
       python: 3.5
+      tags: true
 
 notifications:
   slack:
