@@ -3,12 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to VCheck's documentation!
-==================================
+Welcome to VCheck v\ |release|
+==============================
 
-Contents:
+VCheck Documentation
+--------------------
+
+This is the documentation for SciSalt v\ |release|, last updated |today|.
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
 
 
