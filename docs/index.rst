@@ -9,7 +9,7 @@ Welcome to VCheck v\ |release|
 VCheck Documentation
 --------------------
 
-This is the documentation for SciSalt v\ |release|, last updated |today|.
+This is the documentation for VCheck v\ |release|, last updated |today|.
 
 .. toctree::
    :numbered:
