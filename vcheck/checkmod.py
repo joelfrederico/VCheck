@@ -19,7 +19,7 @@ class CheckMod(object):
         )
 
         # Get repo
-        self._repo = _git.Repo(self.mainmod_path)
+        self._repo = _git.Repo(_os.path.dirname(self.mainmod_path))
 
         # Get hexsha
         self._hexsha = self._repo.head.object.hexsha

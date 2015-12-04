@@ -39,6 +39,7 @@ extensions = [
     'sphinx.ext.pngmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -84,7 +85,7 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', 'scipy-sphinx-theme']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -115,22 +116,30 @@ todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
+themedir = os.path.join(os.curdir, 'scipy-sphinx-theme', '_theme')
+print('Theme dir is: {}'.format(themedir))
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'scipy'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #html_theme_options = {}
+html_theme_options = {
+    "edit_link": True,
+    "sidebar": "right",
+    "rootlinks": [("http://github.com/joelfrederico/VCheck/", "Github"),
+                  ("http://vcheck.readthedocs.org/", "Docs")]
+    }
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = [themedir]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = '{} v{} Manual'.format(project, version)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -156,7 +165,7 @@ html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-#html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
@@ -170,7 +179,7 @@ html_static_path = ['_static']
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-#html_domain_indices = True
+html_domain_indices = False
 
 # If false, no index is generated.
 #html_use_index = True
@@ -210,7 +219,14 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'VCheckdoc'
+htmlhelp_basename = 'vcheck'
+
+html_additional_pages = {
+    'index': 'indexcontent.html',
+    }
+
+html_use_modindex = True
+html_copy_source = False
 
 # -- Options for LaTeX output ---------------------------------------------
 
