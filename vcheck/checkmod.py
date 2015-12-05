@@ -5,6 +5,8 @@ import importlib as _importlib
 
 
 class CheckMod(object):
+    """This is the CheckMod class.
+    """
     def __init__(self, mod):
         self._mod = mod
         self._version = None

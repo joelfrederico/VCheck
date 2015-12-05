@@ -14,3 +14,7 @@ __pycache__/
 
 # vim detritus
 *.swp
+
+# Reference stuff
+**/reference/generated
+**/_build
