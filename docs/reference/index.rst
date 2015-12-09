@@ -16,4 +16,5 @@ For learning how to use VCheck, see also :ref:`user`.
 .. toctree::
    :maxdepth: 2
 
-   checkmod
+   functions
+   classes
