@@ -93,7 +93,7 @@ exclude_patterns = ['_build', 'scipy-sphinx-theme']
 default_role = "autolink"
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
-# add_function_parentheses = True
+add_function_parentheses = False
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
@@ -118,7 +118,6 @@ todo_include_todos = True
 
 # -- Options for HTML output ----------------------------------------------
 themedir = os.path.join(os.curdir, 'scipy-sphinx-theme', '_theme')
-print('Theme dir is: {}'.format(themedir))
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
@@ -328,6 +327,7 @@ print('Autosummary_generate: {}'.format(autosummary_generate))
 
 import inspect
 from os.path import relpath, dirname
+import vcheck
 
 for name in ['sphinx.ext.linkcode', 'numpydoc.linkcode']:
     try:
@@ -378,11 +378,11 @@ def linkcode_resolve(domain, info):
     else:
         linespec = ""
 
-    fn = relpath(fn, start=dirname(numpy.__file__))
+    fn = relpath(fn, start=dirname(vcheck.__file__))
 
-    if 'dev' in numpy.__version__:
-        return "http://github.com/numpy/numpy/blob/master/numpy/%s%s" % (
+    if 'dev' in vcheck.__version__:
+        return "http://github.com/joelfrederico/vcheck/blob/master/vcheck/%s%s" % (
             fn, linespec)
     else:
-        return "http://github.com/numpy/numpy/blob/v%s/numpy/%s%s" % (
-            numpy.__version__, fn, linespec)
+        return "http://github.com/joelfrederico/vcheck/blob/v%s/vcheck/%s%s" % (
+            vcheck.__version__, fn, linespec)
