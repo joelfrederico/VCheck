@@ -11,4 +11,5 @@ __all__ = [
 __all__.sort()
 
 from .checkmod import CheckMod
-from .vcheck import vcheck
+from .vcheck import *
+from .versionerror import VersionError

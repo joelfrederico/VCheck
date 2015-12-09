@@ -1,33 +1,97 @@
-from .checkmod import CheckMod
-import git as _git
-
+from .checkmod import CheckMod as _CheckMod
+from .versionerror import VersionError as _VersionError
+import warnings as _warnings
+import sys as _sys
 
 def vcheck(mod, hexsha=None, version=None):
+    """
+    Checks a given module against either a git sha1 signature or a version.
+
+    The vcheck function is designed to provide a quick
+    and easy way to verify any Python module within a git
+    repository.
+
+    Parameters
+    ----------
+    hexsha : str
+        A git sha1 signature indicating a particular commit.
+    version : str
+        A string indicating a particular git tag.
+
+    Returns
+    -------
+    bool
+        Whether the module checks out or not
+
+    Raises
+    ------
+    vcheck.VersionError
+        If there has been an error identifying the module version.
+    """
+    cm = _CheckMod(mod)
+    return cm.vcheck(hexsha=hexsha, version=version)
+
+def check_warn(mod, hexsha=None, version=None):
+    """
+    Warns if a given Python module does not match a particular git sha1 
+    signature or version.
+    
+    This function is most useful accompanying an :code:`import`.
+    After importing, a version check can quickly raise a warning if the module
+    code does not match or if there are difficulties checking the version.
+
+    Parameters
+    ----------
+    mod : module
+        An object which is a Python module.
+    hexsha : str
+        A git sha1 signature indicating a particular commit.
+    version : str
+        A string indicating a particular git tag.
+    """
     try:
-        cmod = CheckMod(mod)
-    except _git.InvalidGitRepositoryError:
-        raise NotImplemented('Only works for Git repositories.')
+        cm = _CheckMod(mod)
+    except _VersionError as e:
+        _warnings.warn('VersionError: {}'.format(e.msg), stacklevel=2)
+        return
+    except:
+        e = _sys.exc_info()
+        _warnings.warn('{}: {}'.format(e[0].__name__, e[1]), stacklevel=2)
+        return
 
-    if hexsha is not None and version is not None:
-        raise ValueError('Only specify either hexsha ({}) or version({})'.format(hexsha, version))
-    elif hexsha is None and version is None:
-        raise ValueError('Neither hexsha nor version specified')
-    elif hexsha is not None:
-        if cmod.repo.head.object.hexsha == hexsha:
-            return True
-        else:
-            return False
-    elif version is not None:
-        if cmod.repo.is_dirty():
-            raise VersionError('Repo for module {} is dirty, version not well-defined.'.format(cmod.mainmod.__name__))
+    if not cm.vcheck(hexsha=hexsha, version=version):
+        if hexsha is not None:
+            _warnings.warn('Module {} with hexsha {} does not match requested: {}'.format(cm.mainmod.__name__, cm.hexsha, hexsha), stacklevel=2)
+        elif version is not None:
+            _warnings.warn('Module {} with version {} does not match requested: {}'.format(cm.mainmod.__name__, cm.version, version), stacklevel=2)
 
-        for _tag in cmod.repo.tags:
-            if cmod.hexsha == _tag.object.hexsha:
-                if version == _tag.name:
-                    return True
-
-        raise VersionError('Repo for module {} does not match a released version.'.format(cmod.mainmod.__name__))
+    return
 
 
-class VersionError(Exception):
-    pass
+def check_raise(mod, hexsha=None, version=None):
+    """
+    Raises an error if a given Python module does not match a particular git sha1 
+    signature or version.
+    
+    This function is most useful accompanying an :code:`import`.
+    After importing, a version check can quickly raise an error if the module
+    code does not match or if there are difficulties checking the version.
+
+    Parameters
+    ----------
+    mod : module
+        An object which is a Python module.
+    hexsha : str
+        A git sha1 signature indicating a particular commit.
+    version : str
+        A string indicating a particular git tag.
+    """
+    cm = _CheckMod(mod)
+
+    if not cm.vcheck(hexsha=hexsha, version=version):
+        if hexsha is not None:
+            raise _VersionError('Module {} with hexsha {} does not match requested: {}'.format(cm.mainmod.__name__, cm.hexsha, hexsha))
+        elif version is not None:
+            raise _VersionError('Module {} with version {} does not match requested: {}'.format(cm.mainmod.__name__, cm.version, version))
+
+    return
