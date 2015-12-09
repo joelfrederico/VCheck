@@ -4,6 +4,10 @@ matrix:
   include:
     - python: 3.5
       env: TOXENV=py35 TRAV_DIST="sdist bdist_wheel"
+    - python: 3.4
+      env: TOXENV=py34 TRAV_DIST="sdist bdist_wheel"
+    - python: 3.3
+      env: TOXENV=py33 TRAV_DIST="sdist bdist_wheel"
     - python: 2.7
       env: TOXENV=py27 TRAV_DIST="bdist_wheel"
 
