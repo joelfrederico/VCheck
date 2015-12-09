@@ -19,7 +19,8 @@ if not _on_rtd:
     ]
 else:
     install_requires = [
-        'numpydoc'
+        'numpydoc',
+        'sphinx>=1.3.3'
         ]
 
 here = path.abspath(path.dirname(__file__))
