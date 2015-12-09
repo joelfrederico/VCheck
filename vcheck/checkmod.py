@@ -1,4 +1,8 @@
-import git as _git
+import os as _os
+_on_rtd = _os.environ.get('READTHEDOCS', None) == 'True'
+if not _on_rtd:
+    import git as _git
+
 import os as _os
 import re as _re
 import importlib as _importlib
