@@ -3,6 +3,7 @@ from .versionerror import VersionError as _VersionError
 import warnings as _warnings
 import sys as _sys
 
+
 def vcheck(mod, hexsha=None, version=None):
     """
     Checks a given module against either a git sha1 signature or a version.
@@ -31,9 +32,10 @@ def vcheck(mod, hexsha=None, version=None):
     cm = _CheckMod(mod)
     return cm.vcheck(hexsha=hexsha, version=version)
 
+
 def check_warn(mod, hexsha=None, version=None):
     """
-    Warns if a given Python module does not match a particular git sha1 
+    Warns if a given Python module does not match a particular git sha1
     signature or version.
     
     This function is most useful accompanying an :code:`import`.
@@ -70,7 +72,7 @@ def check_warn(mod, hexsha=None, version=None):
 
 def check_raise(mod, hexsha=None, version=None):
     """
-    Raises an error if a given Python module does not match a particular git sha1 
+    Raises an error if a given Python module does not match a particular git sha1
     signature or version.
     
     This function is most useful accompanying an :code:`import`.

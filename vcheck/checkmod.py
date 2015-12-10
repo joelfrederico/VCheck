@@ -12,6 +12,10 @@ from .versionerror import VersionError as _VersionError
 class CheckMod(object):
     """A class containing the main information on a module for version checking.
 
+    Parameters
+    ----------
+    mod : module
+        An object which is a Python module.
     """
     def __init__(self, mod):
         self._mod = mod
@@ -24,8 +28,11 @@ class CheckMod(object):
         # Get main module path
         self._mainmod_path = _os.path.dirname(self.mainmod.__file__)
 
-        if self.repo.is_dirty():
-            raise _VersionError('Repo for module {} is dirty (changes have been made); version not well-defined.'.format(self.mainmod.__name__))
+        try:
+            if self.repo.is_dirty():
+                raise _VersionError('Repo for module {} is dirty (changes have been made); version not well-defined.'.format(self.mainmod.__name__), errno=_VersionError.DIRTY)
+        except _git.InvalidGitRepositoryError as exc:
+            raise _VersionError('The module is not in a git repository.', errno=_VersionError.NO_GIT) from exc
 
     def vcheck(self, hexsha=None, version=None):
         """
@@ -60,8 +67,10 @@ class CheckMod(object):
                 if self.hexsha == _tag.object.hexsha:
                     if version == _tag.name:
                         return True
+                    else:
+                        return False
     
-            raise _VersionError('Repo for module {} does not match a released version.'.format(self.mainmod.__name__))
+            raise _VersionError('Repo for module {} does not match a released version.'.format(self.mainmod.__name__), errno=_VersionError.VERSION_UNMATCHED)
 
     @property
     def mod(self):
@@ -106,14 +115,12 @@ class CheckMod(object):
         The version of the main module.
         """
 
-        try:
-            self._version = None
-            for tag in self.repo.tags:
-                if tag.object.hexsha == self.hexsha:
-                    self._version = tag.name
-        except:
-            raise _VersionError('The module is not in a git repository.')
+        self._version = None
+        if self.repo.tags == []:
+            raise _VersionError('The module has no version as it is not tagged.', errno=_VersionError.NO_TAGS)
 
-        if self._version is None:
-            raise _VersionError('The module has no version property.')
-        return self._version
+        for tag in self.repo.tags:
+            if tag.object.hexsha == self.hexsha:
+                return tag.name
+
+        raise _VersionError('Unable to return version: not at a tag.', errno=_VersionError.NOT_AT_TAG)
