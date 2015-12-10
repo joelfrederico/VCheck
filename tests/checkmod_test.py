@@ -2,7 +2,6 @@ import unittest
 import unittest.mock as mock
 import vcheck
 import git
-import ipdb
 
 # ================================
 # Hexsha for repo head
@@ -174,7 +173,6 @@ class checkmod_test(unittest.TestCase):
         self.assertIs(self.cmod.mainmod, vcheck)
 
     def mainmod_path_test(self):
-        # ipdb.set_trace()
         self.assertEqual(self.cmod.mainmod_path, vcheck.__path__[0])
 
     def repo_test(self):
