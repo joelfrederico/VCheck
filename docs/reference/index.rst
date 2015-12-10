@@ -18,3 +18,4 @@ For learning how to use VCheck, see also :ref:`user`.
 
    functions
    classes
+   exceptions
