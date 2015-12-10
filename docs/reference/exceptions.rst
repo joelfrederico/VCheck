@@ -13,10 +13,15 @@ VCheck use the custom :class:`VersionError` exceptions, which are used to raise 
 
    VersionError
 
-They have two parts, :attr:`VersionError.msg`
+They have two useful, a `msg` and an `errno` that can be accessed:
 
 .. admonition:: Example
 
    Version-checking VCheck itself:
 
-   >>> mod = vcheck.CheckMod(vcheck)
+   >>> ve = vcheck.VersionError('Repo for module is dirty '  \
+                                '(changes have been made); ' \
+                                'version not well-defined.', \
+                                errno=vcheck.VersionError.DIRTY)
+   >>> ve.msg
+   >>> ve.errno
