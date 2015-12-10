@@ -2,6 +2,7 @@ from .checkmod import CheckMod as _CheckMod
 from .versionerror import VersionError as _VersionError
 import warnings as _warnings
 import sys as _sys
+import ipdb
 
 
 def vcheck(mod, hexsha=None, version=None):
@@ -52,22 +53,12 @@ def check_warn(mod, hexsha=None, version=None):
         A string indicating a particular git tag.
     """
     try:
-        cm = _CheckMod(mod)
-    except _VersionError as e:
-        _warnings.warn('VersionError: {}'.format(e.msg), stacklevel=2)
-        return
-    except:
-        e = _sys.exc_info()
-        _warnings.warn('{}: {}'.format(e[0].__name__, e[1]), stacklevel=2)
-        return
-
-    if not cm.vcheck(hexsha=hexsha, version=version):
-        if hexsha is not None:
-            _warnings.warn('Module {} with hexsha {} does not match requested: {}'.format(cm.mainmod.__name__, cm.hexsha, hexsha), stacklevel=2)
-        elif version is not None:
-            _warnings.warn('Module {} with version {} does not match requested: {}'.format(cm.mainmod.__name__, cm.version, version), stacklevel=2)
-
-    return
+        check_raise(mod, hexsha=hexsha, version=version)
+    except ValueError:
+        raise
+    except _VersionError:
+        err = _sys.exc_info()
+        _warnings.warn('{}: {}'.format(err[0].__name__, err[1].args[0]), stacklevel=2)
 
 
 def check_raise(mod, hexsha=None, version=None):
@@ -89,11 +80,8 @@ def check_raise(mod, hexsha=None, version=None):
         A string indicating a particular git tag.
     """
     cm = _CheckMod(mod)
-
     if not cm.vcheck(hexsha=hexsha, version=version):
         if hexsha is not None:
             raise _VersionError('Module {} with hexsha {} does not match requested: {}'.format(cm.mainmod.__name__, cm.hexsha, hexsha))
         elif version is not None:
             raise _VersionError('Module {} with version {} does not match requested: {}'.format(cm.mainmod.__name__, cm.version, version))
-
-    return
