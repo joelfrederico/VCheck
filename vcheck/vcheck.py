@@ -2,7 +2,6 @@ from .checkmod import CheckMod as _CheckMod
 from .versionerror import VersionError as _VersionError
 import warnings as _warnings
 import sys as _sys
-import ipdb
 
 
 def vcheck(mod, hexsha=None, version=None):
