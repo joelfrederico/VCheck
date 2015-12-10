@@ -31,8 +31,8 @@ class CheckMod(object):
         try:
             if self.repo.is_dirty():
                 raise _VersionError('Repo for module {} is dirty (changes have been made); version not well-defined.'.format(self.mainmod.__name__), errno=_VersionError.DIRTY)
-        except _git.InvalidGitRepositoryError as exc:
-            raise _VersionError('The module is not in a git repository.', errno=_VersionError.NO_GIT) from exc
+        except _git.InvalidGitRepositoryError:
+            raise _VersionError('The module is not in a git repository.', errno=_VersionError.NO_GIT)
 
     def vcheck(self, hexsha=None, version=None):
         """

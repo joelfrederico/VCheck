@@ -1,8 +1,4 @@
 import unittest
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
 import vcheck
 import git
 
