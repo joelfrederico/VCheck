@@ -1,5 +1,9 @@
 .. _vcheck.exceptions:
 
+.. testsetup:: *
+
+   import vcheck
+
 **********
 Exceptions
 **********
@@ -20,8 +24,10 @@ They have two useful, a `msg` and an `errno` that can be accessed:
    Version-checking VCheck itself:
 
    >>> ve = vcheck.VersionError('Repo for module is dirty '  \
-                                '(changes have been made); ' \
-                                'version not well-defined.', \
-                                errno=vcheck.VersionError.DIRTY)
+   ...                          '(changes have been made); ' \
+   ...                          'version not well-defined.', \
+   ...                          errno=vcheck.VersionError.DIRTY)
    >>> ve.msg
+   'Repo for module is dirty (changes have been made); version not well-defined.'
    >>> ve.errno
+   2
