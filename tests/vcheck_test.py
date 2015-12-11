@@ -1,7 +1,9 @@
+import unittest.mock as mock
 from .base import base
 from .base import *  # noqa
 import warnings
 import vcheck
+import logging
 
 
 class vcheck_test(base):
@@ -91,6 +93,23 @@ class vcheck_test(base):
         with self.assertWarnsRegex(UserWarning, 'Repo for module .* does not match a released version.'):
             vcheck.check_warn(self.mod2check, version=unpresent_version)
 
+    def check_warn_verbosehexsha_test(self):
+        with mock.patch('builtins.print', autospec=True) as m:
+            vcheck.check_warn(self.mod2check, hexsha=current_hexsha, verbose=True)
+
+            self.assertEqual(m.call_count, 1)
+            self.assertRegex(m.call_args[0][0], 'VCheck: Module vcheck matches requested hexsha .*')
+
+    def check_warn_verboseversion_test(self):
+        on_version_ind = -1
+        self.mockrepo_real(on_version_ind=on_version_ind)
+
+        with mock.patch('builtins.print', autospec=True) as m:
+            vcheck.check_warn(self.mod2check, version=current_versions[on_version_ind], verbose=True)
+
+            self.assertEqual(m.call_count, 1)
+            self.assertRegex(m.call_args[0][0], 'VCheck: Module vcheck matches requested version .*')
+
     # ================================
     # Test check_raise function
     # ================================
@@ -131,3 +150,20 @@ class vcheck_test(base):
     def check_raise_versionerrors_test(self):
         with self.assertRaisesRegex(vcheck.VersionError, 'Repo for module .* does not match a released version.'):
             vcheck.check_raise(self.mod2check, version=unpresent_version)
+
+    def check_raise_verbosehexsha_test(self):
+        with mock.patch('builtins.print', autospec=True) as m:
+            vcheck.check_raise(self.mod2check, hexsha=current_hexsha, verbose=True)
+
+            self.assertEqual(m.call_count, 1)
+            self.assertRegex(m.call_args[0][0], 'VCheck: Module vcheck matches requested hexsha .*')
+
+    def check_raise_verboseversion_test(self):
+        on_version_ind = -1
+        self.mockrepo_real(on_version_ind=on_version_ind)
+
+        with mock.patch('builtins.print', autospec=True) as m:
+            vcheck.check_raise(self.mod2check, version=current_versions[on_version_ind], verbose=True)
+
+            self.assertEqual(m.call_count, 1)
+            self.assertRegex(m.call_args[0][0], 'VCheck: Module vcheck matches requested version .*')

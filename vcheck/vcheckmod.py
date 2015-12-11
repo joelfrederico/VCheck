@@ -33,7 +33,7 @@ def vcheck(mod, hexsha=None, version=None):
     return cm.vcheck(hexsha=hexsha, version=version)
 
 
-def check_warn(mod, hexsha=None, version=None):
+def check_warn(mod, hexsha=None, version=None, verbose=None):
     """
     Warns if a given Python module does not match a particular git sha1
     signature or version.
@@ -52,15 +52,16 @@ def check_warn(mod, hexsha=None, version=None):
         A string indicating a particular git tag.
     """
     try:
-        check_raise(mod, hexsha=hexsha, version=version)
+        check_raise(mod, hexsha=hexsha, version=version, verbose=verbose)
     except ValueError:
         raise
     except _VersionError:
         err = _sys.exc_info()
-        _warnings.warn('{}: {}'.format(err[0].__name__, err[1].args[0]), stacklevel=2)
+        exc = err[1]
+        _warnings.warn('{}: {}'.format(err[0].__name__, exc.args[0]), stacklevel=2)
 
 
-def check_raise(mod, hexsha=None, version=None):
+def check_raise(mod, hexsha=None, version=None, verbose=None):
     """
     Raises an error if a given Python module does not match a particular git sha1
     signature or version.
@@ -80,7 +81,14 @@ def check_raise(mod, hexsha=None, version=None):
     """
     cm = _CheckMod(mod)
     if not cm.vcheck(hexsha=hexsha, version=version):
+
         if hexsha is not None:
             raise _VersionError('Module {} with hexsha {} does not match requested: {}'.format(cm.mainmod.__name__, cm.hexsha, hexsha))
         elif version is not None:
             raise _VersionError('Module {} with version {} does not match requested: {}'.format(cm.mainmod.__name__, cm.version, version))
+    else:
+        if verbose is not None:
+            if hexsha is not None:
+                print('VCheck: Module {} matches requested hexsha {}'.format(cm.mainmod.__name__, cm.hexsha))
+            elif version is not None:
+                print('VCheck: Module {} matches requested version {}'.format(cm.mainmod.__name__, cm.version))
