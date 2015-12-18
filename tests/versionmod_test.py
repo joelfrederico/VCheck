@@ -22,7 +22,7 @@ class versionmod_test(base):
         self.mockrepo_real(is_dirty=True)
         
         with self.assertRaises(vcheck.VersionError) as cm:
-            ver = vcheck.version(self.mod2check)
+            ver = vcheck.version(self.mod2check)  # noqa
 
         self.assertEqual(cm.exception.errno, vcheck.VersionError.DIRTY)
 
@@ -30,7 +30,7 @@ class versionmod_test(base):
         self.mockrepo_real(is_dirty=True)
         
         with self.assertRaises(vcheck.VersionError) as cm:
-            ver = vcheck.hexsha(self.mod2check)
+            ver = vcheck.hexsha(self.mod2check)  # noqa
 
         self.assertEqual(cm.exception.errno, vcheck.VersionError.DIRTY)
 
