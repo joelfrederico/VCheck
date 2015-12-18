@@ -6,10 +6,13 @@ __version__ = '1.2.1'
 
 __all__ = [
     'CheckMod',
-    'vcheck'
+    'vcheck',
+    'version',
+    'hexsha'
     ]
 __all__.sort()
 
 from .checkmod import CheckMod
 from .vcheckmod import *
 from .versionerror import VersionError
+from .versionmod import version, hexsha
