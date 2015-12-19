@@ -22,4 +22,4 @@ class versionerror_test(unittest.TestCase):
         self.assertEqual(VersionError(msg=randmsg, errno=VersionError.DIRTY).errno, VersionError.DIRTY)
 
     def msg_test(self):
-        self.assertEqual(VersionError(msg=randmsg, errno=VersionError.DIRTY).msg, randmsg)
+        self.assertRegex(VersionError(msg=randmsg, errno=VersionError.DIRTY).msg, randmsg, msg='VersionError does not pass its message correctly.')
