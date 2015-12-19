@@ -35,7 +35,8 @@ class VersionError(Exception):
     NOT_AT_TAG        = 5
 
     def __init__(self, msg, errno=None):
-        super().__init__(msg)
+        redmsg = '\033[31m{}\033[0m'.format(msg)
+        super().__init__(redmsg)
         self._msg   = msg
         self._errno = errno
 

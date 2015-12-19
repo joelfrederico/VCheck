@@ -58,7 +58,7 @@ def check_warn(mod, hexsha=None, version=None, verbose=None):
     except _VersionError:
         err = _sys.exc_info()
         exc = err[1]
-        _warnings.warn('{}: {}'.format(err[0].__name__, exc.args[0]), stacklevel=2)
+        _warnings.warn('\033[31m{}: {}\033[0m'.format(err[0].__name__, exc.args[0]), stacklevel=2)
 
 
 def check_raise(mod, hexsha=None, version=None, verbose=None):
@@ -89,6 +89,6 @@ def check_raise(mod, hexsha=None, version=None, verbose=None):
     else:
         if verbose is not None:
             if hexsha is not None:
-                print('VCheck: Module {} matches requested hexsha {}'.format(cm.mainmod.__name__, cm.hexsha))
+                print('\033[32mVCheck: Module {} matches requested hexsha {}\033[0m'.format(cm.mainmod.__name__, cm.hexsha))
             elif version is not None:
-                print('VCheck: Module {} matches requested version {}'.format(cm.mainmod.__name__, cm.version))
+                print('\033[32mVCheck: Module {} matches requested version {}\033[0m'.format(cm.mainmod.__name__, cm.version))
