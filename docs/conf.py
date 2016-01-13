@@ -41,7 +41,6 @@ extensions = [
     'sphinx.ext.autosummary',
     # 'sphinx.ext.ifconfig',
     # 'sphinx.ext.todo',
-    # 'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -131,7 +130,6 @@ html_theme = 'scipy'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
 html_theme_options = {
     "edit_link": True,
     "sidebar": "right",

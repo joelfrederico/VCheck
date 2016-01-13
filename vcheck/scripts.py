@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import ipdb
 import sys as _sys
 import argparse as _argparse
 import vcheck
